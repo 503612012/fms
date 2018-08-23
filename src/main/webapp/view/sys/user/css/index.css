@@ -1,0 +1,9 @@
+.datagrid-cell-c1-status > font {
+    cursor: pointer;
+}
+
+.notice {
+    margin-bottom: -3px;
+    margin-left: 3px;
+    cursor: pointer;
+}

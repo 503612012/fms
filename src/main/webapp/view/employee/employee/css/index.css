@@ -1,0 +1,31 @@
+.datagrid-cell-c1-status > font {
+    cursor: pointer;
+}
+
+.notice {
+    margin-bottom: -3px;
+    margin-left: 3px;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.datagrid-cell-c1-daySalary > span {
+    cursor: pointer;
+}
+
+.datagrid-cell-c1-monthSalary > span {
+    cursor: pointer;
+}
+
+.daySalary_money {
+    color: red;
+    font-weight: bold;
+}
+
+.monthSalary_money {
+    color: red;
+    font-weight: bold;
+}

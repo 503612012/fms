@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.skyer.mapper.WorkinghourMapper">
+	
+	<!-- 添加 -->
+	<insert id="insert">
+		INSERT INTO t_workinghour (`dbid`,
+								   `eid`,
+								   `ename`,
+								   `date`,
+								   `score`,
+								   `day_salary`,
+								   `extra_salary`,
+								   `worksite_id`,
+								   `extra_desc`,
+								   `remark`,
+								   `input_id`,
+								   `input_nick_name`,
+								   `input_date`,
+								   `last_modify_date`,
+								   `last_modify_operator_id`)
+							VALUES (null,
+									#{eid},
+									#{ename},
+									#{date},
+									#{score},
+									#{daySalary},
+									#{extraSalary},
+									#{worksiteId},
+									#{extraDesc},
+									#{remark},
+									#{inputId},
+									#{inputNickName},
+									#{inputDate},
+									#{lastModifyDate},
+									#{lastModifyOperatorId})
+	</insert>
+	
+	<!-- 分页查询工时 -->
+	<select id="findByPage" resultMap="workinghourMap">
+		select wh.*, ws.name as worksiteName from t_workinghour wh
+		left join t_worksite ws on ws.dbid = wh.worksite_id
+		<where>
+			<if test="date != null and date != ''">
+				and wh.date = #{date}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				and wh.`ename` like concat("%", #{keyword}, "%")
+			</if>
+		</where>
+		limit #{pu.index},#{pu.pageSize}
+	</select>
+	
+	<!-- 统计工时总数量 -->
+	<select id="total" resultType="long">
+		select count(*) from t_workinghour wh
+		<where>
+			<if test="date != null and date != ''">
+				and wh.date = #{date}
+			</if>
+			<if test="keyword != null and keyword != ''">
+				and wh.`ename` like concat("%", #{keyword}, "%")
+			</if>
+		</where>
+	</select>
+
+	<!-- 检查是否已经录入 -->
+	<select id="isInput" resultType="long">
+		select count(*) from t_workinghour wh where wh.eid = #{eid} and wh.`date` = #{date}
+	</select>
+
+	<!-- 根据员工ID和日期删除 -->
+	<delete id="deleteByEidAndDate">
+		delete from t_workinghour where eid = #{eid} and `date` = #{date}
+	</delete>
+
+	<!-- 通过员工ID和日期查询 -->
+	<select id="findByEidAndDate" resultMap="workinghourMap">
+		select wh.*, ws.name as worksiteName from t_workinghour wh
+		left join t_worksite ws on ws.dbid = wh.worksite_id
+		where wh.eid = #{eid}
+		<choose>
+			<when test="dateType == 'byMonth'">
+				and left(wh.`date`, 7) = left(#{date}, 7)
+			</when>
+			<when test="dateType == 'byYear'">
+				and left(wh.`date`, 4) = left(#{date}, 4)
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 结果集映射 -->
+	<resultMap type="com.skyer.vo.Workinghour" id="workinghourMap">
+		<id column="dbid" property="id" />
+		<result column="eid" property="eid" />
+		<result column="ename" property="ename" />
+		<result column="date" property="date" />
+		<result column="score" property="score" />
+		<result column="day_salary" property="daySalary" />
+		<result column="extra_salary" property="extraSalary" />
+		<result column="worksite_id" property="worksiteId" />
+		<result column="extra_desc" property="extraDesc" />
+		<result column="remark" property="remark" />
+		<result column="input_id" property="inputId" />
+		<result column="input_nick_name" property="inputNickName" />
+		<result column="input_date" property="inputDate" />
+		<result column="last_modify_date" property="lastModifyDate" />
+		<result column="last_modify_operator_id" property="lastModifyOperatorId" />
+		<result column="worksiteName" property="worksiteName" />
+	</resultMap>
+
+</mapper>

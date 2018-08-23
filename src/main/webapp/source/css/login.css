@@ -1,0 +1,29 @@
+.login-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.login-box .refresh_captcha {
+    cursor: pointer;
+    height: 27px;
+    margin-left: 7px;
+}
+
+.login-box .captcha_td input {
+    width: 100px;
+}
+
+.login-box .captcha_td {
+    display: flex;
+    align-items: center;
+}
+
+.login-box .submit-btn {
+    width: 44px;
+}
+
+.login-box .red {
+    color: red;
+}

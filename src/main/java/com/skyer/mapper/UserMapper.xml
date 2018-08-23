@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.skyer.mapper.UserMapper">
+	
+	<!-- 添加 -->
+	<insert id="insert">
+		INSERT INTO `t_user`
+		            (`dbid`,
+		             `user_name`,
+		             `password`,
+		             `nick_name`,
+		             `status`,
+		             `contact`,
+		             `create_time`,
+		             `modify_time`)
+		VALUES (null,
+		        #{userName},
+		        #{password},
+		        #{nickName},
+		        #{status},
+		        #{contact},
+		        #{createTime},
+		        #{modifyTime})
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update">
+		UPDATE `t_user`
+		SET `user_name` = #{userName},
+		    `password` = #{password},
+		    `nick_name` = #{nickName},
+		    `status` = #{status},
+		    `contact` = #{contact},
+		    `create_time` = #{createTime},
+		    `modify_time` = #{modifyTime}
+		WHERE `dbid` = #{id}
+	</update>
+	
+	<!-- 通过主键查询 -->
+	<select id="findById" resultMap="userMap">
+		select * from t_user where dbid = #{id}
+	</select>
+	
+	<!-- 通过用户名查询 -->
+	<select id="findByUserName" resultMap="userMap">
+		select * from t_user where user_name = #{userName}
+	</select>
+	
+	<!-- 分页查询用户 -->
+	<select id="findByPage" resultMap="userMap">
+		select * from t_user u
+		<where>
+			<if test="keyword != null and keyword != ''">
+				and (u.nick_name like concat("%", #{keyword}, "%") or u.user_name like concat("%", #{keyword}, "%") or u.contact like concat("%", #{keyword}, "%"))
+			</if>
+		</where>
+		limit #{pu.index},#{pu.pageSize}
+	</select>
+	
+	<!-- 统计用户总数量 -->
+	<select id="total" resultType="long">
+		select count(*) from t_user u
+		<where>
+			<if test="keyword != null and keyword != ''">
+				and (u.nick_name like concat("%", #{keyword}, "%") or u.user_name like concat("%", #{keyword}, "%") or u.contact like concat("%", #{keyword}, "%"))
+			</if>
+		</where>
+	</select>
+	
+	<!-- 删除用户 -->
+	<delete id="delete">
+		delete from t_user where dbid = #{id}
+	</delete>
+	
+	<!-- 结果集映射 -->
+	<resultMap type="com.skyer.vo.User" id="userMap">
+		<id column="dbid" property="id" />
+		<result column="user_name" property="userName" />
+		<result column="password" property="password" />
+		<result column="nick_name" property="nickName" />
+		<result column="status" property="status" />
+		<result column="contact" property="contact" />
+		<result column="create_time" property="createTime" />
+		<result column="modify_time" property="modifyTime" />
+	</resultMap>
+
+</mapper>

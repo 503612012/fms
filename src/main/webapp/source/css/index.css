@@ -1,0 +1,36 @@
+.index_page .footer {
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.index_page .menu_box {
+    width: 150px;
+}
+
+.index_page .banner_box {
+    height: 80px;
+    background-color: #E0EDFF;
+}
+
+.index_page .currect_info_box {
+    float: right;
+    margin-right: 10px;
+}
+
+.index_page .currect_info_box > a {
+    text-decoration: none;
+}
+
+.index_page .currect_info_box > a:HOVER {
+    text-decoration: underline;
+}
+
+.index_page .footer a {
+    text-decoration: none;
+}
+
+.index_page .footer a:HOVER {
+    text-decoration: underline;
+}
