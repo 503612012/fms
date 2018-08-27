@@ -5,6 +5,7 @@ import com.skyer.vo.Workinghour;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * WorkinghourMapper接口
@@ -44,5 +45,15 @@ public interface WorkinghourMapper {
      * 通过员工ID和日期查询
      */
     List<Workinghour> findByEidAndDate(@Param("dateType") String dateType, @Param("date") String date, @Param("eid") Integer eid);
+
+    /**
+     * 统计某员工某月总薪资
+     */
+    Double sumMonthSalary(@Param("date") String date, @Param("eid") Integer eid);
+
+    /**
+     * 统计某员工年总薪资
+     */
+    List<Map<String, Object>> countByYear(@Param("date") String date, @Param("eid") Integer eid);
 
 }

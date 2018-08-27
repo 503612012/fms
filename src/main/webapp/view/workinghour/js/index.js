@@ -10,3 +10,8 @@ $(function() {
     });
 
 });
+
+// 格式化额外薪资
+function formatExtraSalary(value, row, index) {
+    return '<span title="' + row.extraDesc + '">' + row.extraSalary + '</span>';
+}

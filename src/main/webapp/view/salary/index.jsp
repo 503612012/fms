@@ -15,6 +15,8 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script type="text/javascript" src="<%=basePath%>/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript" src="<%=basePath%>/easyui/themes/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="<%=basePath%>/source/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="<%=basePath%>/source/js/accounting.js"></script>
+<script type="text/javascript" src="<%=basePath%>/source/highcharts5/highcharts.src.js"></script>
 <script type="text/javascript" src="<%=basePath%>/view/salary/js/index.js"></script>
 <script type="text/javascript" src="<%=basePath%>/source/js/common.js"></script>
 <script type="text/javascript">
@@ -26,7 +28,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <body>
 
 <div id="salary-count" class="easyui-panel" title="工资统计" data-options="iconCls:'myIcon-calculator', fit: true, border: false, tools: '#salary-count-tools'">
-	<div style="padding: 10px">
+	<div style="padding: 10px; font-size: 16px;">
 		<select class="easyui-combobox" name="salary-count-date-type" id="salary-count-date-type">
 			<option value="byMonth">按月统计</option>
 			<option value="byYear">按年统计</option>
@@ -40,7 +42,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		<a href="javascript:void(0)" class="easyui-linkbutton" id="salary-count-search-btn" iconCls="icon-search">查询</a>
 	</div>
 	<div>
-		<table id="salary-count-table"></table>
+		<div id="salary-count-charts"></div>
+	</div>
+	<div>
+		<table id="salary-count-table" style="width: 100%;"></table>
 	</div>
 </div>
 

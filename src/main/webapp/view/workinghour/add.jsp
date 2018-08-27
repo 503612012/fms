@@ -64,7 +64,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		</tr>
 		<tr>
 			<td class="space-between">额外薪资：</td>
-			<td><input name="extraSalary" id="workinghour-extra-salary" type="text" class="easyui-numberbox" data-options="min:0, precision:2" required="true" style="width: 200px;"></td>
+			<td><input name="extraSalary" id="workinghour-extra-salary" type="text" class="easyui-numberbox" data-options="precision:2" required="true" style="width: 200px;"></td>
 		</tr>
 		<tr>
 			<td class="space-between">备注：</td>

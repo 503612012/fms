@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 工时服务层
@@ -68,6 +69,20 @@ public class WorkinghourService extends BaseService {
      */
     public List<Workinghour> findByEidAndDate(String dateType, String date, Integer eid) {
         return workinghourMapper.findByEidAndDate(dateType, date, eid);
+    }
+
+    /**
+     * 统计某员工某月总薪资
+     */
+    public Double sumMonthSalary(String date, Integer eid) {
+        return workinghourMapper.sumMonthSalary(date, eid);
+    }
+
+    /**
+     * 统计某员工年总薪资
+     */
+    public List<Map<String, Object>> countByYear(String date, Integer eid) {
+        return workinghourMapper.countByYear(date, eid);
     }
 
 }

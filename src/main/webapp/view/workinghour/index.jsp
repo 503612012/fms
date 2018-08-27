@@ -41,7 +41,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			<th field="score" width="30">工时记分</th>
 			<th field="date" width="50">工作时间</th>
 			<th field="daySalary" width="30">日薪</th>
-			<th field="extraSalary" width="30">额外薪资</th>
+			<th field="extraSalary" width="30" data-options="formatter:formatExtraSalary">额外薪资</th>
 			<th field="worksiteName" width="60">工地</th>
 			<th field="inputNickName" width="50">录入人员</th>
 			<th field="inputDate" width="70">录入时间</th>

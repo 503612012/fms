@@ -42,7 +42,7 @@ public class SalaryController extends BaseController {
     }
 
     /**
-     * 统计工资
+     * 获取表格数据
      *
      * @param dateType 日期类型
      * @param date     日期
@@ -54,6 +54,26 @@ public class SalaryController extends BaseController {
     public Object getTableData(String dateType, String date, Integer eid) {
         try {
             return salaryService.countSalary(dateType, date, eid);
+        } catch (Exception e) {
+            L.error("---------------------------", e);
+            e.printStackTrace();
+        }
+        return super.fail(ResultEnum.SEARCH_ERROR.getCode(), ResultEnum.SEARCH_ERROR.getValue());
+    }
+
+    /**
+     * 获取图表数据
+     *
+     * @param dateType 日期类型
+     * @param date     日期
+     * @param eid      员工ID
+     */
+    @RequestMapping("/getChartsData")
+    @ResponseBody
+    @RequiresPermissions("E1_01")
+    public Object getChartsData(String dateType, String date, Integer eid) {
+        try {
+            return super.success(salaryService.getChartsData(dateType, date, eid));
         } catch (Exception e) {
             L.error("---------------------------", e);
             e.printStackTrace();
