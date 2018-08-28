@@ -173,3 +173,15 @@
 .myIcon-calendar-view-year {
     background: url('../../file/images/icon/calendar_view_month.png') no-repeat center center;
 }
+
+.myIcon-money {
+    background: url('../../file/images/icon/money.png') no-repeat center center;
+}
+
+.myIcon-money-dollar {
+    background: url('../../file/images/icon/money_dollar.png') no-repeat center center;
+}
+
+.myIcon-money-yen {
+    background: url('../../file/images/icon/money_yen.png') no-repeat center center;
+}
