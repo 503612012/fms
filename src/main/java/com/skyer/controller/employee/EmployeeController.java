@@ -55,8 +55,8 @@ public class EmployeeController extends BaseController {
      * @param keyword 搜索关键字
      */
     @RequestMapping("/list")
-    @RequiresPermissions("B1_01")
     @ResponseBody
+    @RequiresPermissions("B1_01")
     public Object list(Integer page, Integer rows, String keyword, HttpServletRequest req) {
         try {
             JSONArray list = employeeService.findByPage(page, rows, keyword);
@@ -156,6 +156,7 @@ public class EmployeeController extends BaseController {
      */
     @RequestMapping("/findAll")
     @ResponseBody
+    @RequiresPermissions("C1_01")
     public Object findAll() {
         try {
             return employeeService.findAll();
@@ -173,6 +174,7 @@ public class EmployeeController extends BaseController {
      */
     @RequestMapping("/getDaySalaryById")
     @ResponseBody
+    @RequiresPermissions("C2_02")
     public Object getDaySalaryById(Integer eid) {
         try {
             return super.success(employeeService.getDaySalaryById(eid));

@@ -53,8 +53,8 @@ public class MenuController extends BaseController {
      * @param keyword 搜索关键字
      */
     @RequestMapping("/list")
-    @RequiresPermissions("A1_02")
     @ResponseBody
+    @RequiresPermissions("A1_02")
     public Object list(String keyword, HttpServletRequest req) {
         try {
             JSONArray list = menuService.findByPage(keyword);
@@ -118,6 +118,7 @@ public class MenuController extends BaseController {
      */
     @RequestMapping("/getMenuTree")
     @ResponseBody
+    @RequiresPermissions("A1_01_05")
     public Object getMenuTree(Integer userId) {
         try {
             return menuService.getMenuTree(userId);

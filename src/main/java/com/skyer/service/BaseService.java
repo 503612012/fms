@@ -32,10 +32,10 @@ public abstract class BaseService {
      * @param userId   操作用户ID
      * @param nickName 操作用户用户名
      */
-    protected void addLog(String content, String ip, String title, int userId, String nickName) {
+    void addLog(String content, String ip, String title, int userId, String nickName) {
         Log log = new Log();
         log.setContent(content);
-        log.setCreateTimeTime(new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+        log.setCreateTime(new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
         log.setIp(ip);
         log.setTitle(title);
         log.setUserId(userId);
@@ -48,7 +48,7 @@ public abstract class BaseService {
      *
      * @return 当前登录的用户
      */
-    protected User getCurrentUser() {
+    User getCurrentUser() {
         HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return (User) req.getSession().getAttribute(Constant.CURRENT_USER);
     }
@@ -56,7 +56,7 @@ public abstract class BaseService {
     /**
      * 获取当天登录用户的IP地址
      */
-    protected String getCurrentUserIp() {
+    String getCurrentUserIp() {
         HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return IPUtils.getClientIPAddr(req);
     }

@@ -58,8 +58,8 @@ public class WorkinghourController extends BaseController {
      * @param keyword 搜索关键字
      */
     @RequestMapping("/list")
-    @RequiresPermissions("C1_01")
     @ResponseBody
+    @RequiresPermissions("C1_01")
     public Object list(Integer page, Integer rows, String date, String keyword, HttpServletRequest req) {
         try {
             JSONArray list = workinghourService.findByPage(page, rows, date, keyword);
@@ -71,7 +71,7 @@ public class WorkinghourController extends BaseController {
             req.setAttribute("date", StringUtils.isEmpty(date) ? "" : date);
             return result;
         } catch (Exception e) {
-            L.error("---------------------------入参[page:" + page + ", rows:" + rows + ", keyword:" + keyword + "]", e);
+            L.error("---------------------------入参[page:" + page + ", rows:" + rows + ", date:" + date + ", keyword:" + keyword + "]", e);
             e.printStackTrace();
         }
         return super.fail(ResultEnum.SEARCH_ERROR.getCode(), ResultEnum.SEARCH_ERROR.getValue());
@@ -97,15 +97,15 @@ public class WorkinghourController extends BaseController {
      *
      * @param eid  员工ID
      * @param date 日期
-     * @return
      */
     @RequestMapping("/isInput")
     @ResponseBody
+    @RequiresPermissions("C2_02")
     public Object isInput(Integer eid, String date) {
         try {
             return super.success(workinghourService.isInput(eid, date));
         } catch (Exception e) {
-            L.error("---------------------------", e);
+            L.error("---------------------------入参[eid:" + eid + ", date:" + date + "]", e);
             e.printStackTrace();
         }
         return super.fail(ResultEnum.SEARCH_ERROR.getCode(), ResultEnum.SEARCH_ERROR.getValue());
@@ -116,6 +116,7 @@ public class WorkinghourController extends BaseController {
      */
     @RequestMapping("/insert")
     @ResponseBody
+    @RequiresPermissions("C2_02")
     public Object add(Workinghour workinghour) {
         try {
             workinghour.setInputId(super.getCurrentUser().getId());

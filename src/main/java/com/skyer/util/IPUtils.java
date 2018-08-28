@@ -46,7 +46,7 @@ public class IPUtils {
                 ip = InetAddress.getLocalHost().getHostAddress();
             } catch (UnknownHostException e) {
                 e.printStackTrace();
-                L.error("------------------------", e);
+                L.error("---------------------------", e);
             }
         }
         // 6.校验ip的合法性，不合法返回""
@@ -71,7 +71,7 @@ public class IPUtils {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            L.error("------------------------", e);
+            L.error("---------------------------", e);
         }
         return retVal;
     }

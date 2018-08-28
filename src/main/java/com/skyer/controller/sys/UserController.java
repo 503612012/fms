@@ -5,9 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.skyer.constant.Constant;
 import com.skyer.controller.base.BaseController;
 import com.skyer.enumerate.ResultEnum;
+import com.skyer.service.LogService;
 import com.skyer.service.MenuService;
 import com.skyer.service.UserPermissionService;
 import com.skyer.service.UserService;
+import com.skyer.util.IPUtils;
+import com.skyer.vo.Log;
 import com.skyer.vo.Menu;
 import com.skyer.vo.User;
 import com.skyer.vo.UserPermission;
@@ -23,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 用户控制器
@@ -35,6 +40,8 @@ public class UserController extends BaseController {
 
     private final static Logger L = Logger.getLogger(UserController.class);
 
+    @Resource
+    private LogService logService;
     @Resource
     private UserService userService;
     @Resource
@@ -65,8 +72,8 @@ public class UserController extends BaseController {
      * @param keyword 搜索关键字
      */
     @RequestMapping("/list")
-    @RequiresPermissions("A1_01")
     @ResponseBody
+    @RequiresPermissions("A1_01")
     public Object list(Integer page, Integer rows, String keyword, HttpServletRequest req) {
         try {
             JSONArray list = userService.findByPage(page, rows, keyword);
@@ -177,11 +184,13 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/setPermission")
     @ResponseBody
-    public Object setPermission(String data, Integer userId) {
+    @RequiresPermissions("A1_01_05")
+    public Object setPermission(String data, Integer userId, HttpServletRequest req) {
         try {
             JSONArray arr = JSONArray.parseArray(data);
             // 删除此人所有权限
             userPermissionService.deleteUserPermission(userId);
+            List<String> permissions = new ArrayList<>();
             for (int i = 0; i < arr.size(); i++) {
                 if ("false".equals(arr.getJSONObject(i).getString("checked"))) {
                     continue;
@@ -191,10 +200,19 @@ public class UserController extends BaseController {
                 up.setMenuId(menu.getId());
                 up.setUserId(userId);
                 userPermissionService.insert(up);
+                permissions.add(menu.getMenuName());
             }
+            Log log = new Log();
+            log.setContent(permissions.toString());
+            log.setCreateTime(new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+            log.setIp(IPUtils.getClientIPAddr(req));
+            log.setTitle("重新分配权限");
+            log.setUserId(userId);
+            log.setNickName(super.getCurrentUser().getNickName());
+            logService.insert(log);
             return super.success("设置成功！");
         } catch (Exception e) {
-            L.error("---------------------------", e);
+            L.error("---------------------------入参[data:" + data + ", userId:" + userId + "]", e);
             e.printStackTrace();
         }
         return super.fail(ResultEnum.UPDATE_ERROR.getCode(), ResultEnum.UPDATE_ERROR.getValue());

@@ -47,6 +47,7 @@ public class WorkinghourService extends BaseService {
      * 添加
      */
     public boolean insert(Workinghour workinghour) {
+        super.addLog(workinghour.toString(), super.getCurrentUserIp(), "添加工时", super.getCurrentUser().getId(), super.getCurrentUser().getNickName());
         return workinghourMapper.insert(workinghour) > 0;
     }
 

@@ -55,10 +55,6 @@ public class SystemController extends BaseController {
 
     /**
      * 登录操作
-     *
-     * @param userName 用户名
-     * @param password 密码
-     * @param captcha  验证码
      */
     @RequestMapping("/login")
     @ResponseBody
@@ -228,7 +224,7 @@ public class SystemController extends BaseController {
     private void addLog(String content, String ip, String title, int userId, String nickName) {
         Log log = new Log();
         log.setContent(content);
-        log.setCreateTimeTime(new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+        log.setCreateTime(new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
         log.setIp(ip);
         log.setTitle(title);
         log.setUserId(userId);

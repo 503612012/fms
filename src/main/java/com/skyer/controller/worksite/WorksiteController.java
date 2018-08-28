@@ -135,10 +135,11 @@ public class WorksiteController extends BaseController {
     }
 
     /**
-     * 查询所有工单
+     * 查询所有工地
      */
     @RequestMapping("/findAll")
     @ResponseBody
+    @RequiresPermissions("C2_02")
     public Object findAll() {
         try {
             return worksiteService.findAll();

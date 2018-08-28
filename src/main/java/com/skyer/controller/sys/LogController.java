@@ -53,8 +53,8 @@ public class LogController extends BaseController {
      * @param keyword 搜索关键字
      */
     @RequestMapping("/list")
-    @RequiresPermissions("A1_03")
     @ResponseBody
+    @RequiresPermissions("A1_03")
     public Object list(Integer page, Integer rows, String keyword, HttpServletRequest req) {
         try {
             JSONArray list = logService.findByPage(page, rows, keyword);

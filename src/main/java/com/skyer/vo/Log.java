@@ -63,14 +63,6 @@ public class Log {
         this.createTime = createTime;
     }
 
-    public String getCreateTimeTime() {
-        return createTime;
-    }
-
-    public void setCreateTimeTime(String createTime) {
-        this.createTime = createTime;
-    }
-
     public String getIp() {
         return ip;
     }

@@ -55,7 +55,7 @@ public class SalaryController extends BaseController {
         try {
             return salaryService.countSalary(dateType, date, eid);
         } catch (Exception e) {
-            L.error("---------------------------", e);
+            L.error("---------------------------入参[dateType:" + dateType + ", date:" + date + ", eid:" + eid + "]", e);
             e.printStackTrace();
         }
         return super.fail(ResultEnum.SEARCH_ERROR.getCode(), ResultEnum.SEARCH_ERROR.getValue());
@@ -75,7 +75,7 @@ public class SalaryController extends BaseController {
         try {
             return super.success(salaryService.getChartsData(dateType, date, eid));
         } catch (Exception e) {
-            L.error("---------------------------", e);
+            L.error("---------------------------入参[dateType:" + dateType + ", date:" + date + ", eid:" + eid + "]", e);
             e.printStackTrace();
         }
         return super.fail(ResultEnum.SEARCH_ERROR.getCode(), ResultEnum.SEARCH_ERROR.getValue());
