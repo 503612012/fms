@@ -31,7 +31,7 @@ $(function() {
         if (data.extraSalary == null || data.extraSalary == '') {
             data.extraSalary = 0;
         }
-        var isInput = false;
+        var check = {};
         $.ajax({
             url: basePath + "/workinghour/workinghour/isInput.html",
             type: "GET",
@@ -42,9 +42,13 @@ $(function() {
             dataType: "json",
             async: false,
             success: function(result) {
-                isInput = result.data;
+                check = result.data;
             }
         });
+        if (check.isPaySalary) {
+            $.messager.alert("系统提示！", "员工[" + data.ename + "]在[" + data.date.substring(0, 7) + "]工资已经发放，禁止录入！", "error");
+            return;
+        }
         if (isInput) {
             $.messager.confirm('警告', '员工[' + data.ename + ']在[' + data.date + ']已经录入工时，重复录入会覆盖原有工时，是否重复录入？', function(r) {
                 if (r) {

@@ -4,7 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.skyer.controller.base.BaseController;
 import com.skyer.enumerate.ResultEnum;
+import com.skyer.service.PaySalaryService;
 import com.skyer.service.WorkinghourService;
+import com.skyer.vo.PaySalary;
 import com.skyer.vo.Workinghour;
 import org.apache.log4j.Logger;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -29,6 +31,8 @@ public class WorkinghourController extends BaseController {
 
     private final static Logger L = Logger.getLogger(WorkinghourController.class);
 
+    @Resource
+    private PaySalaryService paySalaryService;
     @Resource
     private WorkinghourService workinghourService;
 
@@ -103,7 +107,12 @@ public class WorkinghourController extends BaseController {
     @RequiresPermissions("C2_02")
     public Object isInput(Integer eid, String date) {
         try {
-            return super.success(workinghourService.isInput(eid, date));
+            PaySalary paySalary = paySalaryService.findByEidAndWorkDate(eid, date.substring(0, 7));
+            boolean isInput = workinghourService.isInput(eid, date);
+            JSONObject obj = new JSONObject();
+            obj.put("isInput", isInput);
+            obj.put("isPaySalary", paySalary != null);
+            return super.success(obj);
         } catch (Exception e) {
             L.error("---------------------------入参[eid:" + eid + ", date:" + date + "]", e);
             e.printStackTrace();
