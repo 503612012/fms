@@ -15,6 +15,10 @@ $(function() {
         data.daySalary = $('#workinghour-day-salary').numberbox('getValue');
         data.worksiteId = $('#workinghour-worksite').combobox('getValue');
         data.score = $("#workinghour-score").numberbox('getValue');
+        if (parseFloat(data.score) < 0 || parseFloat(data.score) > 10) {
+            $.messager.alert("系统提示！", "工时记分只能在0-10之间！", "error");
+            return;
+        }
         data.extraSalary = $("#workinghour-extra-salary").numberbox('getValue');
         data.remark = $('#workinghour-remark').textbox('getValue');
         data.extraSalaryDesc = $('#workinghour-extra-salary-desc').textbox('getValue');

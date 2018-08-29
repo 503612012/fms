@@ -72,6 +72,109 @@ $(function() {
         return '<span><a href="#" onclick="showYearSalryDetail(\'' + row.date + '\', ' + row.eid + ', \'' + row.ename + '\');">查看详情</a></span>';
     };
 
+    // 打开发放薪资窗口
+    window.openPaySalaryDialog = function(eid, ename, date, salary) {
+        $('#pay_salary_dialog_form').form('clear');
+        $("#pay_salary_dialog").dialog('open').dialog('setTitle', '发放薪资：<span style="color: red;">' + ename + '</span>');
+        $('#ename').textbox('textbox').attr('readonly', true);
+        $("#ename").textbox('setValue', ename);
+        $('#workDate').textbox('textbox').attr('readonly', true);
+        $("#workDate").textbox('setValue', date);
+        $('#shouldPaySalary').numberbox('textbox').attr('readonly', true);
+        $("#shouldPaySalary").numberbox('setValue', salary);
+        $("input[name=eid]").val(eid);
+    };
+
+    // 提交
+    $(".pay_salary_dialog_buttons_submit_btn").on("click", function() {
+        var eid = $("input[name=eid]").val();
+        var ename = $("#ename").textbox('getValue');
+        var workDate = $("#workDate").textbox('getValue');
+        if (workDate == '') {
+            $.messager.alert("系统提示！", "请输入工作月份！", "error");
+            return;
+        }
+        var shouldPaySalary = $("#shouldPaySalary").numberbox('getValue');
+        if (shouldPaySalary == '') {
+            $.messager.alert("系统提示！", "请输入应发工资！", "error");
+            return;
+        }
+        var actualPaySalary = $("#actualPaySalary").numberbox('getValue');
+        if (actualPaySalary == '') {
+            $.messager.alert("系统提示！", "请输入实发工资！", "error");
+            return;
+        }
+        var remark = $("#remark").textbox('getValue');
+        if (remark == '') {
+            $.messager.alert("系统提示！", "请输入备注！", "error");
+            return;
+        }
+        if (parseFloat(shouldPaySalary) != parseFloat(actualPaySalary)) {
+            $.messager.confirm('警告', '应发工资和实际发放的工资不一致，是否重确认发放？', function(r) {
+                if (r) {
+                    $.ajax({
+                        url: getBasePath() + "/paySalary/paySalary/add.html",
+                        type: "POST",
+                        async: true,
+                        dataType: "json",
+                        data: {
+                            "eid": eid,
+                            "workDate": workDate,
+                            "shouldPaySalary": shouldPaySalary,
+                            "actualPaySalary": actualPaySalary,
+                            "remark": remark
+                        },
+                        success: function(result) {
+                            if (result.code != 200) {
+                                $.messager.alert("系统提示！", result.data, "error");
+                            } else {
+                                $.messager.alert("系统提示！", "工资发放成功");
+                                $('#pay_salary_dialog').dialog('close');
+                                loadTable("byYear", workDate.substring(0, 4), eid, ename);
+                            }
+                        }
+                    });
+                }
+            });
+        } else {
+            $.ajax({
+                url: getBasePath() + "/paySalary/paySalary/add.html",
+                type: "POST",
+                async: true,
+                dataType: "json",
+                data: {
+                    "eid": eid,
+                    "workDate": workDate,
+                    "shouldPaySalary": shouldPaySalary,
+                    "actualPaySalary": actualPaySalary,
+                    "remark": remark
+                },
+                success: function(result) {
+                    if (result.code != 200) {
+                        $.messager.alert("系统提示！", result.data, "error");
+                    } else {
+                        $.messager.alert("系统提示！", "工资发放成功");
+                        $('#pay_salary_dialog').dialog('close');
+                        loadTable("byYear", workDate.substring(0, 4), eid, ename);
+                    }
+                }
+            });
+        }
+    });
+
+    // 年薪资列表发放薪资按钮格式化
+    var paySalaryHanleFormatter = function(value, row, index) {
+        if (row.isPay == true) {
+            return '该月工资已发！';
+        } else {
+            if (hasPaySalaryPermission() == 'true') {
+                return '<a href="#" onclick="openPaySalaryDialog(\'' + row.eid + '\', \'' + row.ename + '\', \'' + row.date + '\', \'' + row.salary + '\');">发放工资</a>';
+            } else {
+                return '-';
+            }
+        }
+    };
+
     // 加载表格
     var loadTable = function(dateType, date, eid, ename) {
         var title = '<span style="color: red">' + ename + '</span>' + date + '薪资详情如下：';
@@ -125,13 +228,18 @@ $(function() {
                         formatter: function(value, row, index) {
                             return '<span style="color: red">' + row.salary + '</span>';
                         }
-                    },
-                    {
+                    }, {
                         field: 'handle',
                         title: '操作',
                         align: 'center',
-                        width: 640,
+                        width: 320,
                         formatter: yearTableHanleFormatter
+                    }, {
+                        field: 'paySalary',
+                        title: '工资发放',
+                        align: 'center',
+                        width: 320,
+                        formatter: paySalaryHanleFormatter
                     }
                 ]],
                 title: title,

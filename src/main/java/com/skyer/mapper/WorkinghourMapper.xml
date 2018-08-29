@@ -97,12 +97,12 @@
 
 	<!-- 统计某员工某月总薪资 -->
 	<select id="sumMonthSalary" resultType="double">
-		select sum(s.`day_salary` * s.score / 10) + sum(s.`extra_salary`) from t_workinghour s where left(s.`date`, 7) = left(#{date}, 7) and s.eid = #{eid}
+		select convert((sum(s.`day_salary` * s.score / 10) + sum(s.`extra_salary`)), decimal(10, 2)) from t_workinghour s where left(s.`date`, 7) = left(#{date}, 7) and s.eid = #{eid}
 	</select>
 
 	<!-- 统计某员工年总薪资 -->
 	<select id="countByYear" resultType="hashmap">
-		select wh.eid, wh.ename, LEFT(wh.`date`, 7) as `date`, sum(wh.`day_salary` * wh.`score` / 10 + wh.`extra_salary`) as salary from t_workinghour wh where wh.`eid` = #{eid} and left(wh.`date`, 4) = left(#{date}, 4) group by left(wh.`date`, 7)
+		select wh.eid, wh.ename, LEFT(wh.`date`, 7) as `date`, convert((sum(wh.`day_salary` * wh.`score` / 10 + wh.`extra_salary`)), decimal(10, 2)) as salary from t_workinghour wh where wh.`eid` = #{eid} and left(wh.`date`, 4) = left(#{date}, 4) group by left(wh.`date`, 7)
 	</select>
 
 	<!-- 结果集映射 -->

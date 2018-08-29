@@ -168,6 +168,22 @@ public class EmployeeController extends BaseController {
     }
 
     /**
+     * 查询所有员工没有默认选中值
+     */
+    @RequestMapping("/findAllWithNoDefault")
+    @ResponseBody
+    @RequiresPermissions("C1_01")
+    public Object findAllWithNoDefault() {
+        try {
+            return employeeService.findAllWithNoDefault();
+        } catch (Exception e) {
+            L.error("---------------------------", e);
+            e.printStackTrace();
+        }
+        return super.fail(ResultEnum.SEARCH_ERROR.getCode(), ResultEnum.SEARCH_ERROR.getValue());
+    }
+
+    /**
      * 获取某员工的日薪
      *
      * @param eid 员工ID

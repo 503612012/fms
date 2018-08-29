@@ -1,3 +1,4 @@
+<%@ page import="com.skyer.util.AuthUtils" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <%
@@ -23,6 +24,9 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	function getBasePath(){
 		return '<%=basePath%>';
 	}
+	function hasPaySalaryPermission() {
+		return '<%=AuthUtils.hasPermission("E1_01_01")%>';
+    }
 </script>
 </head>
 <body>
@@ -47,6 +51,44 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<div>
 		<table id="salary-count-table" style="width: 100%;"></table>
 	</div>
+</div>
+
+<!-- 工资发放模态窗口 -->
+<div id="pay_salary_dialog" class="easyui-dialog" style="width:500px;height:400px;padding:10px 10px" closed="true" buttons="#pay_salary_dialog_buttons">
+	<form id="pay_salary_dialog_form" method="post">
+		<input type="hidden" name="eid" value="">
+		<table cellspacing="10px;">
+			<tr>
+				<td>员工姓名：</td>
+				<td><input name="ename" id="ename" class="easyui-textbox" required="true" style="width: 200px;"></td>
+			</tr>
+			<tr>
+				<td>工作月份：</td>
+				<td><input name="workDate" id="workDate" type="text" class="easyui-textbox" required="true" style="width: 200px;"></td>
+			</tr>
+			<tr>
+				<td>应发工资：</td>
+				<td>
+					<input name="shouldPaySalary" id="shouldPaySalary" type="text" class="easyui-numberbox" data-options="precision:2" required="true" style="width: 200px;">
+				</td>
+			</tr>
+			<tr>
+				<td>实发工资：</td>
+				<td>
+					<input name="actualPaySalary" id="actualPaySalary" type="text" class="easyui-numberbox" data-options="precision:2" required="true" style="width: 200px;">
+				</td>
+			</tr>
+			<tr>
+				<td>备注：</td>
+				<td><input class="easyui-textbox" id="remark" name="remark" data-options="multiline:true" style="height:60px; width: 200px;"/></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<div id="pay_salary_dialog_buttons">
+	<a href="javascript:void(0)" class="easyui-linkbutton pay_salary_dialog_buttons_submit_btn" iconCls="icon-ok">确认</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton pay_salary_dialog_buttons_cancel_btn" iconCls="icon-cancel" onclick="javascript:$('#pay_salary_dialog').dialog('close')">关闭</a>
 </div>
 
 </body>

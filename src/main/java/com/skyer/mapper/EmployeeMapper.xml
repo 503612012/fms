@@ -53,7 +53,7 @@
 		select * from t_employee where dbid = #{id}
 	</select>
 	
-	<!-- 分页查询用户 -->
+	<!-- 分页查询员工 -->
 	<select id="findByPage" resultMap="employeeMap">
 		select * from t_employee e
 		<where>
@@ -64,7 +64,7 @@
 		limit #{pu.index},#{pu.pageSize}
 	</select>
 	
-	<!-- 统计用户总数量 -->
+	<!-- 统计员工总数量 -->
 	<select id="total" resultType="long">
 		select count(*) from t_employee e
 		<where>
@@ -74,7 +74,7 @@
 		</where>
 	</select>
 	
-	<!-- 删除用户 -->
+	<!-- 删除员工 -->
 	<delete id="delete">
 		delete from t_employee where dbid = #{id}
 	</delete>

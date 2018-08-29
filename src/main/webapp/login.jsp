@@ -39,7 +39,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 		   		<tr>
 		   			<td>验证码:</td>
 		   			<td class="captcha_td">
-		   				<input class="easyui-textbox" type="text" name="captcha" data-options="required:true"/>
+		   				<input class="easyui-textbox" type="text" name="captcha"/>
 		   				<span><img src="<%=basePath%>/sys/getCaptcha.html" class="refresh_captcha"/></span>
 		   			</td>
 		   		</tr>

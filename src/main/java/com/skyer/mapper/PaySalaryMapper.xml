@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.skyer.mapper.PaySalaryMapper">
+	
+	<!-- 添加 -->
+	<insert id="insert">
+		insert into t_pay_salary (`dbid`,
+								  `eid`,
+								  `work_date`,
+								  `should_pay_salary`,
+								  `actual_pay_salary`,
+								  `remark`,
+								  `pay_date`,
+								  `pay_id`)
+						  values (null,
+								  #{eid},
+								  #{workDate},
+								  #{shouldPaySalary},
+								  #{actualPaySalary},
+								  #{remark},
+								  #{payDate},
+								  #{payId})
+	</insert>
+
+	<!-- 条件查询 -->
+	<select id="findByEidAndWorkDate" resultMap="paySalaryMap">
+		select * from t_pay_salary ps
+		<where>
+			<if test="eid != null and eid !=''">
+				and ps.eid = #{eid}
+			</if>
+			<if test="date != null and date != ''">
+				and ps.work_date = #{date}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 分页查询工资发放记录 -->
+	<select id="findByPage" resultType="hashmap">
+		select e.`name` as ename, u.nick_name as payName, (ps.`actual_pay_salary` - ps.`should_pay_salary`) as diffSalary, ps.*
+		from t_pay_salary ps
+		left join t_employee e on e.`dbid` = ps.`eid`
+		left join t_user u on u.dbid = ps.pay_id
+		<where>
+			<if test="workDate != null and workDate != ''">
+				and ps.work_date = #{workDate}
+			</if>
+			<if test="payDate != null and payDate != ''">
+				and left(ps.pay_date, 10) = #{payDate}
+			</if>
+			<if test="eid != null and eid != ''">
+				and ps.eid = #{eid}
+			</if>
+		</where>
+		limit #{pu.index},#{pu.pageSize}
+	</select>
+	
+	<!-- 统计工资发放记录总数量 -->
+	<select id="total" resultType="long">
+		select count(*) from t_pay_salary p
+		<where>
+			<if test="workDate != null and workDate != ''">
+				and p.work_date = #{workDate}
+			</if>
+			<if test="payDate != null and payDate != ''">
+				and left(p.pay_date, 10) = #{payDate}
+			</if>
+			<if test="eid != null and eid != ''">
+				and p.eid = #{eid}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 结果集映射 -->
+	<resultMap type="com.skyer.vo.PaySalary" id="paySalaryMap">
+		<id column="dbid" property="id" />
+		<result column="eid" property="eid" />
+		<result column="work_date" property="workDate" />
+		<result column="should_pay_salary" property="shouldPaySalary" />
+		<result column="actual_pay_salary" property="actualPaySalary" />
+		<result column="remark" property="remark" />
+		<result column="pay_date" property="payDate" />
+		<result column="pay_id" property="payId" />
+	</resultMap>
+
+</mapper>

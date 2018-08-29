@@ -125,6 +125,21 @@ public class EmployeeService extends BaseService {
     }
 
     /**
+     * 查询所有员工没有默认选中值
+     */
+    public JSONArray findAllWithNoDefault() {
+        List<Employee> list = employeeMapper.findAll();
+        JSONArray result = new JSONArray();
+        for (Employee aList : list) {
+            JSONObject obj = new JSONObject();
+            obj.put("id", aList.getId());
+            obj.put("text", aList.getName());
+            result.add(obj);
+        }
+        return result;
+    }
+
+    /**
      * 获取某员工的日薪
      *
      * @param eid 员工ID

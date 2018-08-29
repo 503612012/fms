@@ -3,6 +3,7 @@ package com.skyer.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.skyer.vo.PaySalary;
 import com.skyer.vo.Workinghour;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,8 @@ import java.util.Map;
 public class SalaryService extends BaseService {
 
     @Resource
+    private PaySalaryService paySalaryService;
+    @Resource
     private WorkinghourService workinghourService;
 
     /**
@@ -34,6 +37,14 @@ public class SalaryService extends BaseService {
     public JSONArray countSalary(String dateType, String date, Integer eid) {
         if ("byYear".equals(dateType)) {
             List<Map<String, Object>> list = workinghourService.countByYear(date, eid);
+            for (Map<String, Object> item : list) {
+                PaySalary paySalary = paySalaryService.findByEidAndWorkDate(((Integer) item.get("eid")), ((String) item.get("date")));
+                if (paySalary == null) {
+                    item.put("isPay", false);
+                } else {
+                    item.put("isPay", true);
+                }
+            }
             return JSON.parseObject(JSONArray.toJSONString(list), JSONArray.class);
         }
         List<Workinghour> list = workinghourService.findByEidAndDate(dateType, date, eid);
