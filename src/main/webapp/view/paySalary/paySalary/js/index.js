@@ -29,3 +29,9 @@ function formatDiffSalary(value, row, index) {
         return 0;
     }
 }
+
+function setSelected(data) {
+    if (getEid() != '' && getEid() != null && getEid() != 'null') {
+        $('#pay_salary_eid').combobox('setValue', getEid());
+    }
+}

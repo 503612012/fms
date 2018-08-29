@@ -35,11 +35,14 @@ public class PaySalaryController extends BaseController {
      */
     @RequestMapping("/index")
     @RequiresPermissions("E1_02")
-    public ModelAndView index() {
+    public ModelAndView index(Integer eid, String date) {
         try {
-            return new ModelAndView("/view/paySalary/paySalary/index");
+            ModelAndView mv = new ModelAndView("/view/paySalary/paySalary/index");
+            mv.addObject("eid", eid);
+            mv.addObject("date", date);
+            return mv;
         } catch (Exception e) {
-            L.error("---------------------------", e);
+            L.error("---------------------------入参[eid:" + eid + ", date:" + date + "]", e);
             e.printStackTrace();
         }
         return null;

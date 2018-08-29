@@ -3,6 +3,7 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+Integer eid = (Integer) request.getAttribute("eid");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,12 +22,15 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	function getBasePath(){
 		return '<%=basePath%>';
 	}
+	function getEid() {
+		return '<%=eid%>';
+    }
 </script>
 </head>
 <body>
 
 <table id="paySalaryList" title="发薪记录" class="easyui-datagrid" fitColumns="true" style="width:100%; height:100%" fit="true" border="false"
-	   iconCls="myIcon-money" pagination="true" url="<%=basePath%>/paySalary/paySalary/list.html"
+	   iconCls="myIcon-money" pagination="true" url="<%=basePath%>/paySalary/paySalary/list.html?eid=${eid}&workDate=${date}"
 	   data-options="singleSelect:true,rownumbers:true" toolbar="#toolbar">
 	<thead>
 		<tr>
@@ -44,13 +48,14 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 
 <!-- 表格的工具条 -->
 <div id="toolbar">
-	<span>工作时间：</span><input class="Wdate" id="pay_salary_work_date" name="date" type="text" style="border: 1px solid #95B8E7; border-radius: 5px 5px 5px 5px;"/>
-	<span>发薪时间：</span><input class="Wdate" id="pay_salary_pay_date" name="date" type="text" style="border: 1px solid #95B8E7; border-radius: 5px 5px 5px 5px;"/>
+	<span>工作时间：</span><input value="${date}" class="Wdate" id="pay_salary_work_date" name="pay_salary_work_date" type="text" style="border: 1px solid #95B8E7; border-radius: 5px 5px 5px 5px;"/>
+	<span>发薪时间：</span><input class="Wdate" id="pay_salary_pay_date" name="pay_salary_pay_date" type="text" style="border: 1px solid #95B8E7; border-radius: 5px 5px 5px 5px;"/>
 	<span>员工：</span><input class="easyui-combobox" id="pay_salary_eid" name="eid" data-options="
 						url: '<%=basePath%>/employee/employee/findAllWithNoDefault.html',
 						valueField: 'id',
 						textField: 'text',
-						pannelHeight: 'auto'" style="width: 100px;"/>
+						pannelHeight: 'auto',
+						onLoadSuccess: setSelected" style="width: 100px;"/>
 	<a href="javascript:void(0)" class="easyui-linkbutton search_btn" plain="true" iconCls="icon-search">查询</a>
 </div>
 

@@ -162,10 +162,24 @@ $(function() {
         }
     });
 
+    // 查看工资发放详情
+    window.openPaySalaryDetail = function(eid, ename, date) {
+        var jq = top.jQuery;
+        var title = '发薪记录';
+        jq('#panel_box').tabs('close', title);
+        var url = '/paySalary/paySalary/index.html?eid=' + eid + '&date=' + date;
+        var content = '<iframe scrolling="auto" frameborder="0" src="' + getBasePath() + url + '" style="width:100%;height:100%;"></iframe>';
+        jq('#panel_box').tabs('add', {
+            title: title,
+            content: content,
+            closable: true
+        });
+    };
+
     // 年薪资列表发放薪资按钮格式化
     var paySalaryHanleFormatter = function(value, row, index) {
         if (row.isPay == true) {
-            return '该月工资已发！';
+            return '该月工资已发，点击<a href="#" onclick="openPaySalaryDetail(\'' + row.eid + '\', \'' + row.ename + '\', \'' + row.date + '\')">查看</a>详情！';
         } else {
             if (hasPaySalaryPermission() == 'true') {
                 return '<a href="#" onclick="openPaySalaryDialog(\'' + row.eid + '\', \'' + row.ename + '\', \'' + row.date + '\', \'' + row.salary + '\');">发放工资</a>';
