@@ -66,6 +66,13 @@
             <version>1.1.6</version>
         </dependency>
 
+        <!-- lombok依赖 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.14</version>
+        </dependency>
+
         <!-- 日志依赖 -->
         <dependency>
             <groupId>log4j</groupId>

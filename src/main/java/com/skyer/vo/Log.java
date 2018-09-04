@@ -1,10 +1,13 @@
 package com.skyer.vo;
 
+import lombok.Data;
+
 /**
  * 日志实体类
  *
  * @author skyer
  */
+@Data
 public class Log {
 
     private Integer id; // 日志表
@@ -14,66 +17,5 @@ public class Log {
     private String nickName; // 用户昵称
     private String createTime; // 操作时间
     private String ip; // 操作IP
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    @Override
-    public String toString() {
-        return "Log [id=" + id + ", title=" + title + ", content=" + content + ", userId=" + userId + ", nickName=" + nickName + ", createTime=" + createTime + ", ip=" + ip + "]";
-    }
 
 }
