@@ -49,7 +49,7 @@ $(function() {
             $.messager.alert("系统提示！", "员工[" + data.ename + "]在[" + data.date.substring(0, 7) + "]工资已经发放，禁止录入！", "error");
             return;
         }
-        if (isInput) {
+        if (check.isInput) {
             $.messager.confirm('警告', '员工[' + data.ename + ']在[' + data.date + ']已经录入工时，重复录入会覆盖原有工时，是否重复录入？', function(r) {
                 if (r) {
                     inputWorkinghour(data);

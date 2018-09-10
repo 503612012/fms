@@ -24,7 +24,7 @@ $(function() {
 
 function formatDiffSalary(value, row, index) {
     if ((parseFloat(row.actual_pay_salary) - parseFloat(row.should_pay_salary)) != 0) {
-        return '<span style="color: red;">' + (parseFloat(row.actual_pay_salary) - parseFloat(row.should_pay_salary)) + '</span>';
+        return '<span style="color: red;" title="' + row.remark + '">' + (parseFloat(row.actual_pay_salary) - parseFloat(row.should_pay_salary)) + '</span>';
     } else {
         return 0;
     }
