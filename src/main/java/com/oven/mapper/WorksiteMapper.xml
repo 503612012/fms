@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oven.mapper.WorksiteMapper">
+
+	<!-- 添加 -->
+	<insert id="insert">
+		insert into t_worksite (`dbid`,
+							 	`name`,
+							 	`desc`,
+							 	`create_id`,
+							 	`create_nick_name`,
+							 	`create_date`,
+								`last_modify_date`,
+								`last_modify_id`)
+						values (null,
+								#{name},
+								#{desc},
+								#{createId},
+								#{createNickName},
+								#{createDate},
+								#{lastModifyDate},
+								#{lastModifyId})
+	</insert>
+
+	<!-- 分页查询工地 -->
+	<select id="findByPage" resultMap="worksiteMap">
+		select * from t_worksite ws
+		<where>
+			<if test="keyword != null and keyword != ''">
+				and ws.`name` like concat("%", #{keyword}, "%")
+			</if>
+		</where>
+		limit #{pu.index},#{pu.pageSize}
+	</select>
+
+	<!-- 统计工地总数量 -->
+	<select id="total" resultType="long">
+		select count(*) from t_worksite ws
+		<where>
+			<if test="keyword != null and keyword != ''">
+				and ws.`name` like concat("%", #{keyword}, "%")
+			</if>
+		</where>
+	</select>
+
+	<!-- 更新 -->
+	<update id="update">
+		update t_worksite set `name` = #{name},
+							  `desc` = #{desc},
+							  `create_id` = #{createId},
+							  `create_nick_name` = #{createNickName},
+							  `create_date` = #{createDate},
+							  `last_modify_date` = #{lastModifyDate},
+							  `last_modify_id` = #{lastModifyId}
+						where `dbid` = #{id}
+	</update>
+
+	<!-- 通过主键查询 -->
+	<select id="findById" resultMap="worksiteMap">
+		select * from t_worksite where dbid = #{id}
+	</select>
+
+	<!-- 删除 -->
+	<delete id="delete">
+		delete from t_worksite where dbid = #{id}
+	</delete>
+
+	<!-- 查询所有工地 -->
+	<select id="findAll" resultMap="worksiteMap">
+		select * from t_worksite
+	</select>
+
+	<!-- 结果集映射 -->
+	<resultMap type="com.oven.vo.Worksite" id="worksiteMap">
+		<id column="dbid" property="id" />
+		<result column="name" property="name" />
+		<result column="desc" property="desc" />
+		<result column="create_id" property="createId" />
+		<result column="create_nick_name" property="createNickName" />
+		<result column="create_date" property="createDate" />
+		<result column="last_modify_date" property="lastModifyDate" />
+		<result column="last_modify_id" property="lastModifyId" />
+	</resultMap>
+
+</mapper>

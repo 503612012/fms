@@ -24,7 +24,7 @@
 	<session-config><session-timeout>30</session-timeout></session-config>
     <listener>    
         <listener-class>    
-            com.skyer.listener.SessionListener
+            com.oven.listener.SessionListener
         </listener-class>    
     </listener>
     
@@ -37,7 +37,7 @@
 	<!-- jsp过滤器(防止直接访问jsp页面) -->
 	<filter>
 		<filter-name>jspFilter</filter-name>
-		<filter-class>com.skyer.filter.JSPFilter</filter-class>
+		<filter-class>com.oven.filter.JSPFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>jspFilter</filter-name>

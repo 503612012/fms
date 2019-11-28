@@ -14,7 +14,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="com.skyer.interceptor.SecurityInterceptor">
+            <bean class="com.oven.interceptor.SecurityInterceptor">
                 <property name="excludedUrls">
                     <list>
                         <value>/sys/loginPage</value>
@@ -37,7 +37,7 @@
     </bean>
 
     <!-- 自定义Realm -->
-    <bean id="myRealm" class="com.skyer.realm.MyRealm"/>
+    <bean id="myRealm" class="com.oven.realm.MyRealm"/>
 
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -89,17 +89,17 @@
     <!-- 配置sqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="typeAliasesPackage" value="com.skyer.vo"/>
+        <property name="typeAliasesPackage" value="com.oven.vo"/>
         <property name="mapperLocations">
             <list>
-                <value>classpath:com/skyer/mapper/*.xml</value>
+                <value>classpath:com/oven/mapper/*.xml</value>
             </list>
         </property>
     </bean>
 
     <!-- 配置自动扫描mapper -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.skyer.mapper"/>
+        <property name="basePackage" value="com.oven.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
@@ -110,7 +110,7 @@
     <tx:annotation-driven/>
 
     <!-- 自动扫描service包 -->
-    <context:component-scan base-package="com.skyer">
+    <context:component-scan base-package="com.oven">
         <!-- 扫描时排除的包 -->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
@@ -149,6 +149,6 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
     <!-- 配置扫描器 -->
-    <context:component-scan base-package="com.skyer.controller"/>
+    <context:component-scan base-package="com.oven.controller"/>
 
 </beans>

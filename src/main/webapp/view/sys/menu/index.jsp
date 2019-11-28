@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
-<%@ page import="com.skyer.util.AuthUtils"%>
+<%@ page import="com.oven.util.AuthUtils"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;

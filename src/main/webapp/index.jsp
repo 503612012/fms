@@ -1,5 +1,5 @@
-<%@ page import="com.skyer.constant.Constant" pageEncoding="UTF-8"%>
-<%@ page import="com.skyer.vo.User"%>
+<%@ page import="com.oven.constant.Constant" pageEncoding="UTF-8"%>
+<%@ page import="com.oven.vo.User"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
