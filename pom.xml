@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.oven</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>fms</artifactId>
     <version>2.0.0</version>
 
     <parent>
@@ -512,7 +512,7 @@
                 <version>1.0.0</version>
                 <configuration>
                     <password>Cyeg4HM6gmg0nMEpkz7CwA==</password>
-                    <packages>com.oven.demo</packages>
+                    <packages>com.oven.fms</packages>
                     <classpath>${project.build.directory}/lib</classpath>
                 </configuration>
                 <executions>
@@ -579,9 +579,9 @@
                                 <echo message="start copy backup to target folder"/>
                                 <copy file="src/main/release/backup" tofile="${project.build.directory}/backup"/>
                                 <echo message="finish copy backup"/>
-                                <echo message="start copy demo.sql to target folder"/>
-                                <copy file="src/main/release/demo.sql" tofile="${project.build.directory}/demo.sql"/>
-                                <echo message="finish copy demo.sql"/>
+                                <echo message="start copy fms.sql to target folder"/>
+                                <copy file="src/main/release/fms.sql" tofile="${project.build.directory}/fms.sql"/>
+                                <echo message="finish copy fms.sql"/>
                             </target>
                         </configuration>
                     </execution>
