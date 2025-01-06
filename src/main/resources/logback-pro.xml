@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOG_FILE" value="demo"/>
+    <property name="LOG_FILE" value="fms"/>
     <property scope="context" name="LOG_HOME" value="temp"/>
     <springProperty scope="context" name="LOG_HOME" source="log.home"/>
     <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger.%M:%L - %msg%n"/>
@@ -99,7 +99,7 @@
         <includeCallerData>true</includeCallerData>
     </appender>
 
-    <logger name="com.oven.demo.framework.aop" additivity="false" level="INFO">
+    <logger name="com.oven.fms.framework.aop" additivity="false" level="INFO">
         <appender-ref ref="SYNC_INFO"/>
         <appender-ref ref="SYNC_LOG"/>
     </logger>

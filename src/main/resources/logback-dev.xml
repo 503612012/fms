@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOG_FILE" value="demo"/>
+    <property name="LOG_FILE" value="fms"/>
     <property scope="context" name="LOG_HOME" value="temp"/>
     <springProperty scope="context" name="LOG_HOME" source="log.home"/>
     <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger.%M:%L - %msg%n"/>
@@ -129,27 +129,27 @@
     <root level="INFO">
         <appender-ref ref="SYNC_STDOUT"/>
     </root>
-    <logger name="com.oven.demo.core" level="INFO" additivity="false">
+    <logger name="com.oven.fms.core" level="INFO" additivity="false">
         <appender-ref ref="SYNC_STDOUT"/>
         <appender-ref ref="SYNC_FILE"/>
     </logger>
-    <logger name="com.oven.demo.framework.exception" level="ERROR" additivity="false">
+    <logger name="com.oven.fms.framework.exception" level="ERROR" additivity="false">
         <appender-ref ref="SYNC_ERROR"/>
         <appender-ref ref="SYNC_STDOUT"/>
     </logger>
-    <logger name="com.oven.demo.framework.aop" level="INFO" additivity="false">
+    <logger name="com.oven.fms.framework.aop" level="INFO" additivity="false">
         <appender-ref ref="SYNC_INFO"/>
         <appender-ref ref="SYNC_STDOUT"/>
     </logger>
-    <logger name="com.oven.demo.framework.limitation" level="INFO" additivity="false">
+    <logger name="com.oven.fms.framework.limitation" level="INFO" additivity="false">
         <appender-ref ref="SYNC_INFO"/>
         <appender-ref ref="SYNC_STDOUT"/>
     </logger>
-    <logger name="com.oven.demo.core.task" level="INFO" additivity="false">
+    <logger name="com.oven.fms.core.task" level="INFO" additivity="false">
         <appender-ref ref="SYNC_INFO"/>
         <appender-ref ref="SYNC_STDOUT"/>
     </logger>
-    <logger name="com.oven.demo.framework.limitation" level="ERROR" additivity="false">
+    <logger name="com.oven.fms.framework.limitation" level="ERROR" additivity="false">
         <appender-ref ref="SYNC_ERROR"/>
         <appender-ref ref="SYNC_STDOUT"/>
     </logger>
