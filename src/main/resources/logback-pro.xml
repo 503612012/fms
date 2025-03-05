@@ -6,6 +6,22 @@
     <springProperty scope="context" name="LOG_HOME" source="log.home"/>
     <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger.%M:%L - %msg%n"/>
 
+    <!-- 定义控制台日志信息 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 包路径缩写 -->
+            <pattern>%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{10}).%M:%L - %msg%n</pattern>
+            <!-- 包路径不缩写 -->
+            <!-- <pattern>%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger).%M:%L - %msg%n</pattern> -->
+        </encoder>
+    </appender>
+
+    <!-- 定义异步控制台日志信息 -->
+    <appender name="SYNC_STDOUT" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="STDOUT"/>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
     <!-- INFO日志定义 -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/${LOG_FILE}.info.log</file>
@@ -102,13 +118,16 @@
     <logger name="com.oven.fms.framework.aop" additivity="false" level="INFO">
         <appender-ref ref="SYNC_INFO"/>
         <appender-ref ref="SYNC_LOG"/>
+        <appender-ref ref="SYNC_STDOUT"/>
     </logger>
     <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" additivity="false" level="ERROR">
         <appender-ref ref="SYNC_ERROR"/>
         <appender-ref ref="SYNC_LOG"/>
+        <appender-ref ref="SYNC_STDOUT"/>
     </logger>
     <logger name="org" additivity="false" level="WARN">
         <appender-ref ref="SYNC_LOG"/>
+        <appender-ref ref="SYNC_STDOUT"/>
     </logger>
     <logger name="org.springframework.jdbc.core" additivity="false" level="DEBUG">
         <appender-ref ref="SYNC_DEBUG"/>
@@ -121,10 +140,12 @@
     <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" level="ERROR" additivity="false">
         <appender-ref ref="SYNC_ERROR"/>
         <appender-ref ref="SYNC_LOG"/>
+        <appender-ref ref="SYNC_STDOUT"/>
     </logger>
     <root level="INFO">
         <appender-ref ref="SYNC_LOG"/>
         <appender-ref ref="SYNC_ERROR"/>
+        <appender-ref ref="SYNC_STDOUT"/>
     </root>
 
 </configuration>
