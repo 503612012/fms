@@ -4,6 +4,7 @@
     <property name="LOG_FILE" value="fms"/>
     <property scope="context" name="LOG_HOME" value="temp"/>
     <springProperty scope="context" name="LOG_HOME" source="log.home"/>
+    <springProperty scope="context" name="springProfile" source="spring.profiles.active"/>
     <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger.%M:%L - %msg%n"/>
 
     <!-- 定义控制台日志信息 -->
@@ -115,37 +116,98 @@
         <includeCallerData>true</includeCallerData>
     </appender>
 
-    <logger name="com.oven.fms.framework.aop" additivity="false" level="INFO">
-        <appender-ref ref="SYNC_INFO"/>
-        <appender-ref ref="SYNC_LOG"/>
-        <appender-ref ref="SYNC_STDOUT"/>
-    </logger>
-    <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" additivity="false" level="ERROR">
-        <appender-ref ref="SYNC_ERROR"/>
-        <appender-ref ref="SYNC_LOG"/>
-        <appender-ref ref="SYNC_STDOUT"/>
-    </logger>
-    <logger name="org" additivity="false" level="WARN">
-        <appender-ref ref="SYNC_LOG"/>
-        <appender-ref ref="SYNC_STDOUT"/>
-    </logger>
-    <logger name="org.springframework.jdbc.core" additivity="false" level="DEBUG">
-        <appender-ref ref="SYNC_DEBUG"/>
-        <appender-ref ref="SYNC_LOG"/>
-    </logger>
-    <logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="TRACE" additivity="false">
-        <appender-ref ref="SYNC_DEBUG"/>
-        <appender-ref ref="SYNC_LOG"/>
-    </logger>
-    <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" level="ERROR" additivity="false">
-        <appender-ref ref="SYNC_ERROR"/>
-        <appender-ref ref="SYNC_LOG"/>
-        <appender-ref ref="SYNC_STDOUT"/>
-    </logger>
-    <root level="INFO">
-        <appender-ref ref="SYNC_LOG"/>
-        <appender-ref ref="SYNC_ERROR"/>
-        <appender-ref ref="SYNC_STDOUT"/>
-    </root>
+    <!-- 定义控制台打印JDBC信息 -->
+    <appender name="JDBC" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 包路径缩写 -->
+            <pattern>%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %yellow(%-5level) %boldMagenta(%logger{10}).%M:%L - %yellow(%msg%n)</pattern>
+            <!-- 包路径不缩写 -->
+            <!-- <pattern>%red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %green([%thread]) %yellow(%-5level) %boldMagenta(%logger).%M:%L - %yellow(%msg%n)</pattern> -->
+        </encoder>
+    </appender>
+
+    <!-- 定义异步控制台打印JDBC信息 -->
+    <appender name="SYNC_JDBC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="JDBC"/>
+        <includeCallerData>true</includeCallerData>
+    </appender>
+
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="SYNC_STDOUT"/>
+        </root>
+        <logger name="com.oven.fms.core" level="INFO" additivity="false">
+            <appender-ref ref="SYNC_STDOUT"/>
+            <appender-ref ref="SYNC_LOG"/>
+        </logger>
+        <logger name="com.oven.fms.framework.exception" level="ERROR" additivity="false">
+            <appender-ref ref="SYNC_ERROR"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <logger name="com.oven.fms.framework.aop" level="INFO" additivity="false">
+            <appender-ref ref="SYNC_INFO"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <logger name="com.oven.fms.framework.limitation" level="INFO" additivity="false">
+            <appender-ref ref="SYNC_INFO"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <logger name="com.oven.fms.core.task" level="INFO" additivity="false">
+            <appender-ref ref="SYNC_INFO"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <logger name="com.oven.fms.framework.limitation" level="ERROR" additivity="false">
+            <appender-ref ref="SYNC_ERROR"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <logger name="org.springframework.jdbc.core" level="DEBUG" additivity="false">
+            <appender-ref ref="SYNC_JDBC"/>
+            <appender-ref ref="SYNC_DEBUG"/>
+        </logger>
+        <logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="TRACE" additivity="false">
+            <appender-ref ref="SYNC_JDBC"/>
+            <appender-ref ref="SYNC_DEBUG"/>
+        </logger>
+        <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" level="ERROR" additivity="false">
+            <appender-ref ref="SYNC_ERROR"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="pro">
+        <logger name="com.oven.fms.framework.aop" additivity="false" level="INFO">
+            <appender-ref ref="SYNC_INFO"/>
+            <appender-ref ref="SYNC_LOG"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" additivity="false" level="ERROR">
+            <appender-ref ref="SYNC_ERROR"/>
+            <appender-ref ref="SYNC_LOG"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <logger name="org" additivity="false" level="WARN">
+            <appender-ref ref="SYNC_LOG"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <logger name="org.springframework.jdbc.core" additivity="false" level="DEBUG">
+            <appender-ref ref="SYNC_DEBUG"/>
+            <appender-ref ref="SYNC_LOG"/>
+        </logger>
+        <logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="TRACE" additivity="false">
+            <appender-ref ref="SYNC_DEBUG"/>
+            <appender-ref ref="SYNC_LOG"/>
+        </logger>
+        <logger name="org.apache.shiro.session.mgt.AbstractValidatingSessionManager" level="ERROR" additivity="false">
+            <appender-ref ref="SYNC_ERROR"/>
+            <appender-ref ref="SYNC_LOG"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="SYNC_LOG"/>
+            <appender-ref ref="SYNC_ERROR"/>
+            <appender-ref ref="SYNC_STDOUT"/>
+        </root>
+    </springProfile>
+
 
 </configuration>
