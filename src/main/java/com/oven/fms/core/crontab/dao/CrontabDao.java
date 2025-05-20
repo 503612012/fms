@@ -16,7 +16,7 @@ public class CrontabDao extends BaseDao<Object> {
      * 根据key获取cron表达式
      */
     public String getCron(String key) {
-        return getOneString(ConditionAndParams.build("_key", key), "cron", "t_crontab");
+        return getOneString(ConditionAndParams.build("_key", key), "cron", "fms_crontab");
     }
 
 }
