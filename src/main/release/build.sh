@@ -1,7 +1,7 @@
 #!/bin/bash
 . ./path.sh
 count=$(docker images | grep fms | grep @version@ | wc -l)
-if [[ $count > 0 ]]; then
+if [[ $count -gt 0 ]]; then
   docker rmi fms:@version@
 fi
 echo "begin build fms image..."

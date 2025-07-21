@@ -21,7 +21,7 @@
                     <i class="layui-icon layuiadmin-button-btn" style="vertical-align: initial;">重置</i>
                 </button>
             </div>
-            <button th:if="${session.menu.contains(T(com.oven.demo.common.constant.PermissionCode).EMPLOYEE_INSERT)}" class="layui-btn layui-btn-normal" id="employee-add-btn">
+            <button th:if="${session.menu.contains(T(com.oven.fms.common.constant.PermissionCode).EMPLOYEE_INSERT)}" class="layui-btn layui-btn-normal" id="employee-add-btn">
                 <i class="layui-icon layui-icon-add-circle" style="vertical-align: initial;">添加员工</i>
             </button>
         </div>
@@ -87,15 +87,15 @@
     </form>
 </div>
 <script type="text/html" id="employeeListBar">
-    <a th:if="${session.menu.contains(T(com.oven.demo.common.constant.PermissionCode).EMPLOYEE_UPDATE)}" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-    <a th:if="${session.menu.contains(T(com.oven.demo.common.constant.PermissionCode).EMPLOYEE_DELETE)}" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a th:if="${session.menu.contains(T(com.oven.fms.common.constant.PermissionCode).EMPLOYEE_UPDATE)}" class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a th:if="${session.menu.contains(T(com.oven.fms.common.constant.PermissionCode).EMPLOYEE_DELETE)}" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script th:inline="javascript">
     /*<![CDATA[*/
     var menu = [[${session.menu}]];
 
-    var hasChangeEmployeeStatusPermission = /*[[${T(com.oven.demo.common.constant.PermissionCode).EMPLOYEE_SETSTATUS}]]*/ '';
-    var hasShowEmployeeMoneyStatusPermission = /*[[${T(com.oven.demo.common.constant.PermissionCode).EMPLOYEE_SHOW_MONEY}]]*/ '';
+    var hasChangeEmployeeStatusPermission = /*[[${T(com.oven.fms.common.constant.PermissionCode).EMPLOYEE_SETSTATUS}]]*/ '';
+    var hasShowEmployeeMoneyStatusPermission = /*[[${T(com.oven.fms.common.constant.PermissionCode).EMPLOYEE_SHOW_MONEY}]]*/ '';
 
     function hasPermission(code) {
         for (var i = 0; i < menu.length; i++) {
